@@ -53,7 +53,15 @@
 
     <!-- Color StyleSheet CSS File -->
     <link href="css/pink.css" rel="stylesheet" id="color" type="text/css">
-
+<style>
+@media only screen and (max-width: 480px) {
+    audio {
+  max-width:200px !important;
+  margin:0 auto;
+  width:100%;
+  }
+}
+	</style>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50" id="body"  class="only_portfolio_variation">
@@ -572,7 +580,10 @@
                                  data-paddingleft="[0,0,0,0]"
 
                                  style="z-index: 20; min-width: 480px; max-width: 480px; white-space: normal; font-size: 25px; line-height: 35px; font-weight: 400; color: #ffffff; letter-spacing: 0px;">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                                <audio autoplay="yes" controls="yes" loop="yes" id="playAudio">
+<source src="images/drip.mp3" type="audio/mpeg">
+</audio>
+				</div>
 
                             <!-- LAYER NR. 17 -->
                             <a class="tp-caption scroll rev-btn raleway  tp-resizeme"
@@ -681,18 +692,6 @@
         </div>
 
     </section>
-	
-	<section class="bg_grey">
-	<div class="cover">
-</div>
-
-<div class="video-wrapper" data-video-id="5minygTWknw" data-video-youtube-link="y" data-video-width-add="100" data-video-height-add="100" style="height: 800px;">
-  <div class="video-overlay" style="opacity: .10"></div>
-					  <div class="tv">
-						    <div class="screen mute" id="tv"></div>
-					  </div>
-				</div>
-	</section>
 
     <!-- half Section Ended -->
 
@@ -2285,61 +2284,13 @@ btn.on('click', function(e) {
 });
 </script>
 <script>
-// Grab data attributes from video-wrapper
-var videoID = $(".video-wrapper").data("video-id");
-var videoYouTubeLink = $(".video-wrapper").data("video-youtube-link");
-var videoStart = $(".video-wrapper").data("video-start");
-var videoEnd = $(".video-wrapper").data("video-end");
-var videoWidthAdd = $(".video-wrapper").data("video-width-add");
-var videoHeightAdd = $(".video-wrapper").data("video-height-add");
-
-// Create video script element
-var tag = document.createElement('script');
-  tag.src = 'https://www.youtube.com/player_api';
-var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// Prepend expander if data attr is yes
-if (videoYouTubeLink === 'y') {
-  $(".video-wrapper").prepend('<a href="https://www.youtube.com/watch?v=' + videoID + '" class="video-expand" target="_blank">View on Youtube</a>');
-}
-
-// Setup the Youtube TV with player defaults
-var tv,
-  playerDefaults = {autoplay: 0, autohide: 1, modestbranding: 1, rel: 0, showinfo: 0, controls: 0, disablekb: 1, enablejsapi: 0, iv_load_policy: 3};
-var vid = {'videoId': videoID, 'startSeconds': videoStart, 'endSeconds': videoEnd, 'suggestedQuality': 'hd720'};
-
-function onYouTubePlayerAPIReady(){
-  tv = new YT.Player('tv', {events: {'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange}, playerVars: playerDefaults});
-}
-
-function onPlayerReady(){
-  tv.loadVideoById(vid);
-  tv.mute();
-}
-
-function onPlayerStateChange(e) {
-  if (e.data === 1){
-    $('#tv').addClass('active');
-  } else if (e.data === 0){
-    tv.seekTo(vid.startSeconds)
-  }
-}
-
-function vidRescale(){
-  var w = $(window).width() + videoWidthAdd,
-    h = $(window).height() + videoHeightAdd;
-  if (w/h > 16/9){
-    tv.setSize(w, w/16*9);
-    $('.tv .screen').css({'left': '0px'});
-  } else {
-    tv.setSize(h/9*16, h);
-    $('.tv .screen').css({'left': -($('.tv .screen').outerWidth()-w)/2});
-  }
-}
-
-$(window).on('load resize', function(){
-  vidRescale();
+$(window).scroll(function() {
+    var height = $(document).height() - $(window).height();
+var scroll = $(window).scrollTop();  
+      var audioElm = $('#playAudio').get(0);
+    audioElm.play();
+    audioElm.volume = 1 - $(window).scrollTop()/height;
+    console.log(audioElm.volume);
 });
 </script>
 <script>
