@@ -180,7 +180,18 @@
                             <!-- MAIN IMAGE -->
                             <img src="images/slider_1.jpg"  alt=""  data-bgposition="center center" data-kenburns="on" data-duration="5000" data-ease="Power2.easeInOut" data-scalestart="100" data-scaleend="150" data-rotatestart="0" data-rotateend="0" data-blurstart="20" data-blurend="0" data-offsetstart="0 0" data-offsetend="0 0" class="rev-slidebg" data-no-retina>
                             <!-- LAYERS -->
-
+                    <div class="rs-background-video-layer"
+                         data-forcerewind="on"
+                         data-volume="mute"
+                         data-videowidth="100%"
+                         data-videoheight="100vh"
+                         data-videomp4="images/drip.mp4"
+                         data-videopreload="auto"
+                         data-videoloop="loopandnoslidestop"
+                         data-forceCover="1"
+                         data-aspectratio="16:9"
+                         data-autoplay="true"
+                         data-autoplayonlyfirsttime="false"></div>
                             <!-- LAYER NR. 1 -->
                             <div class="tp-caption tp-shape tp-shapewrapper tp-slicey  tp-resizeme"
                                  id="slide-67-layer-9"
@@ -2869,10 +2880,21 @@
                                         <input placeholder="Email" class="form_inputs" id="email" name="email" required="required">
 
                                     </div>
+					                                    <div class="col-sm-6">
+
+                                        <input placeholder="No. Whatsapp" class="form_inputs" id="phone" name="phone" required="required">
+
+                                    </div>
+
+                                    <div class="col-sm-6">
+
+                                        <input placeholder="Choose Website Package" class="form_inputs" id="product" name="product" required="required">
+
+                                    </div>
 
                                     <div class="col-sm-12">
 
-                                        <textarea placeholder="Your Message" class="form_inputs form_textarea" id="message" name="message" required="required"></textarea>
+                                        <textarea placeholder="Your Message" class="form_inputs form_textarea" id="description" name="description" required="required"></textarea>
 
                                     </div>
 
@@ -3135,6 +3157,43 @@ $(window).on('load resize', function(){
   vidRescale();
 });
 </script>
+<script>
+$(document).on('click','.send', function(){
+    /* Form Input */
+    var input_name          = $("#name").val(),
+        input_email         = $("#email").val(),
+        input_phone         = $("#phone").val(),
+        input_product       = $("#product").val(),
+        input_description   = $("#description").val();
+ 
+    /* Whatsapp Setting */
+    var walink      = 'https://web.whatsapp.com/send',
+        phone       = '6289605552515',
+        text        = 'Hello I want to order website',
+        text_yes    = 'Your order was successfully sent.',
+        text_no     = 'Fill this form to order.';
+ 
+    /* Smartphone Support */
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        var walink = 'whatsapp://send';
+    }
+ 
+    if(input_name != "" && input_phone != "" && input_product != ""){
+        /* Whatsapp URL */
+        var checkout_whatsapp = walink + '?phone=' + phone + '&text=' + text + '%0A%0A' +
+            '*Nama* : ' + input_name + '%0A' +
+            '*Email* : ' + input_email + '%0A' +
+            '*No. Whatsapp* : ' + input_phone + '%0A' +
+            '*Product* : ' + input_product + '%0A' +
+            '*Additional Note* : ' + input_description + '%0A';
+ 
+        /* Whatsapp Window Open */
+        window.open(checkout_whatsapp,'_blank');
+        document.getElementById("text-info").innerHTML = '<div class="alert alert-success">'+text_yes+'</div>';
+    } else {
+        document.getElementById("text-info").innerHTML = '<div class="alert alert-danger">'+text_no+'</div>';
+    }
+});
+</script>		
 </body>
-
 </html>
